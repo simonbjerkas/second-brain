@@ -1,9 +1,14 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 import Providers from './providers';
+import { cn } from '@/lib/utils';
+import { Header } from './header';
 
-const inter = Inter({ subsets: ['latin'] });
+const fontSans = FontSans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
 
 export const metadata: Metadata = {
   title: 'Second Brain',
@@ -17,9 +22,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Providers>
-        <body className={inter.className}>{children}</body>
-      </Providers>
+      <body
+        className={cn(
+          'min-h-screen bg-background font-sans antialiased',
+          fontSans.variable
+        )}
+      >
+        <Providers>
+          <Header />
+          <main className="container mx-auto">{children}</main>
+        </Providers>
+      </body>
     </html>
   );
 }
