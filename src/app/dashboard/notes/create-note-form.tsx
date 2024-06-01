@@ -15,40 +15,26 @@ import { Input } from '@/components/ui/input';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { LoadingButton } from '@/components/loading-button';
-import { Id } from '@/convex/_generated/dataModel';
+import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
   title: z.string().min(1).max(250),
-  file: z.instanceof(File),
+  content: z.string().min(1).max(10000),
 });
 
 export const CreateNoteForm = ({ onUpload }: { onUpload: () => void }) => {
-  const createDocument = useMutation(api.documents.createDocument);
-  const generateUploadUrl = useMutation(api.documents.generateUploadUrl);
+  const createNote = useMutation(api.notes.createNote);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: '',
+      content: '',
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const uploadUrl = await generateUploadUrl();
-
-    const result = await fetch(uploadUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': values.file.type },
-      body: values.file,
-    });
-
-    const { storageId } = await result.json();
-
-    await createDocument({
-      title: values.title,
-      storageId: storageId as Id<'_storage'>,
-    });
-
+    await createNote(values);
     onUpload();
   }
   return (
@@ -69,21 +55,14 @@ export const CreateNoteForm = ({ onUpload }: { onUpload: () => void }) => {
         />
         <FormField
           control={form.control}
-          name="file"
-          render={({ field: { value, onChange, ...fieldProps } }) => (
+          name="content"
+          render={({ field }) => (
             <FormItem>
-              <FormLabel>File</FormLabel>
+              <FormLabel>Note</FormLabel>
               <FormControl>
-                <Input
-                  type="file"
-                  accept=".txt,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
-                  {...fieldProps}
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      onChange(file);
-                    }
-                  }}
+                <Textarea
+                  placeholder="What do you want to write my friend?"
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
@@ -92,9 +71,9 @@ export const CreateNoteForm = ({ onUpload }: { onUpload: () => void }) => {
         />
         <LoadingButton
           isLoading={form.formState.isSubmitting}
-          loadingText="Uploading"
+          loadingText="Creating"
         >
-          Upload
+          Create
         </LoadingButton>
       </form>
     </Form>

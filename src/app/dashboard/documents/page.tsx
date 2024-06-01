@@ -10,7 +10,7 @@ import Image from 'next/image';
 const DocumentsPage = () => {
   const documents = useQuery(api.documents.getDocuments);
   return (
-    <main>
+    <>
       <div className="flex justify-between items-center pb-12">
         <h1 className="text-4xl font-bold">My Documents</h1>
         {documents && documents.length > 0 && <UploadDocumentButton />}
@@ -31,7 +31,7 @@ const DocumentsPage = () => {
           <UploadDocumentButton />
         </div>
       )}
-    </main>
+    </>
   );
 };
 
