@@ -22,7 +22,7 @@ const formSchema = z.object({
   content: z.string().min(1).max(10000),
 });
 
-export const CreateNoteForm = ({ onUpload }: { onUpload: () => void }) => {
+export const CreateNoteForm = ({ onCreate }: { onCreate: () => void }) => {
   const createNote = useMutation(api.notes.createNote);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -35,7 +35,7 @@ export const CreateNoteForm = ({ onUpload }: { onUpload: () => void }) => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await createNote(values);
-    onUpload();
+    onCreate();
   }
   return (
     <Form {...form}>
