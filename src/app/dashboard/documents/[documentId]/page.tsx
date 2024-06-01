@@ -7,14 +7,12 @@ import { ChatPanel } from './chat-panel';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PageSkeleton } from './page-skeleton';
 import { DeleteDocumentButton } from './delete-document-button';
+import { useParams } from 'next/navigation';
 
-const DocumentPage = ({
-  params,
-}: {
-  params: { documentId: Id<'documents'> };
-}) => {
+const DocumentPage = () => {
+  const { documentId } = useParams<{ documentId: Id<'documents'> }>();
   const document = useQuery(api.documents.getDocument, {
-    documentId: params.documentId,
+    documentId: documentId,
   });
 
   return (
@@ -42,7 +40,7 @@ const DocumentPage = ({
               </div>
             </TabsContent>
             <TabsContent value="chat">
-              <ChatPanel documentId={params.documentId} />
+              <ChatPanel documentId={documentId} />
             </TabsContent>
           </Tabs>
         </>
