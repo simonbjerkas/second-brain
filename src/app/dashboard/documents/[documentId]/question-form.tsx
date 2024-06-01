@@ -25,7 +25,7 @@ export const QuestionForm = ({
 }: {
   documentId: Id<'documents'>;
 }) => {
-  const askQuestion = useAction(api.documents.askQuestion);
+  const askQuestion = useAction(api.openAI.askQuestion);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
