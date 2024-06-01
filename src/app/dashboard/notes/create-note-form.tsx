@@ -11,56 +11,45 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { LoadingButton } from '@/components/loading-button';
 import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
-  title: z.string().min(1).max(250),
-  content: z.string().min(1).max(10000),
+  text: z.string().min(1).max(2500),
 });
 
-export const CreateNoteForm = ({ onCreate }: { onCreate: () => void }) => {
+export const CreateNoteForm = ({
+  onNoteCreated,
+}: {
+  onNoteCreated: () => void;
+}) => {
   const createNote = useMutation(api.notes.createNote);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: '',
-      content: '',
+      text: '',
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await createNote(values);
-    onCreate();
+    onNoteCreated();
   }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="Expense Report" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="content"
+          name="text"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Note</FormLabel>
               <FormControl>
                 <Textarea
+                  rows={8}
                   placeholder="What do you want to write my friend?"
                   {...field}
                 />

@@ -100,34 +100,3 @@ export const askQuestion = action({
     return response;
   },
 });
-
-export const generateNoteDescription = internalAction({
-  args: {
-    noteId: v.id('notes'),
-    content: v.string(),
-  },
-  async handler(ctx, args) {
-    const chatCompletion = await openai.chat.completions.create({
-      messages: [
-        {
-          role: 'system',
-          content: `Here is a note: ${args.content}`,
-        },
-        {
-          role: 'user',
-          content: `Please generate a 1 sentence description for this note.`,
-        },
-      ],
-      model: 'gpt-3.5-turbo',
-    });
-
-    const response =
-      chatCompletion.choices[0].message.content ||
-      'Could not figure out description for this note.';
-
-    await ctx.runMutation(internal.notes.updateNoteDescription, {
-      noteId: args.noteId,
-      description: response,
-    });
-  },
-});

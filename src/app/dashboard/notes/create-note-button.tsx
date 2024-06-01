@@ -27,10 +27,10 @@ export const CreateNoteButton = () => {
         <DialogHeader>
           <DialogTitle>Create</DialogTitle>
           <DialogDescription>
-            Create a team note for you to search over in the future.
+            Create a note you want to be searchable later on.
           </DialogDescription>
         </DialogHeader>
-        <CreateNoteForm onCreate={() => setIsOpen(false)} />
+        <CreateNoteForm onNoteCreated={() => setIsOpen(false)} />
       </DialogContent>
     </Dialog>
   );

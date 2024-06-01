@@ -16,25 +16,14 @@ export const NoteCard = ({ note }: { note: Doc<'notes'> }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{document.title}</CardTitle>
+        <CardTitle>{note._creationTime}</CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
-      <CardContent>
-        {note.description ? (
-          <p>{note.description}</p>
-        ) : (
-          <div className="space-y-2">
-            <Skeleton className="w-full h-6" />
-            <Skeleton className="w-full h-6" />
-            <Skeleton className="w-full h-6" />
-          </div>
-        )}
-      </CardContent>
       <CardFooter>
         <Button variant="secondary" asChild className="flex items-center gap-2">
           <Link href={`/notes/${note._id}`}>
             <Eye className="size-4" />
-            View
+            View Note
           </Link>
         </Button>
       </CardFooter>
