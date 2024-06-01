@@ -71,6 +71,19 @@ export const createDocument = mutation({
   },
 });
 
+export const deleteDocument = mutation({
+  args: {
+    documentId: v.id('documents'),
+  },
+  async handler(ctx, args) {
+    const accessObj = await hasAccessToDocument(ctx, args.documentId);
+    if (!accessObj) return;
+
+    await ctx.storage.delete(accessObj.document.storageId);
+    await ctx.db.delete(accessObj.document._id);
+  },
+});
+
 export const getDocuments = query({
   async handler(ctx) {
     const userId = (await ctx.auth.getUserIdentity())?.tokenIdentifier;

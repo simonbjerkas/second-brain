@@ -20,7 +20,7 @@ export const UploadDocumentButton = () => {
       <DialogTrigger asChild>
         <Button className="flex items-center gap-2">
           <Upload className="size-4" />
-          Upload document
+          Upload Document
         </Button>
       </DialogTrigger>
       <DialogContent>

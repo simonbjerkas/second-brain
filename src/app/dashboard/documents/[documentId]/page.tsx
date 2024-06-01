@@ -6,6 +6,7 @@ import { useQuery } from 'convex/react';
 import { ChatPanel } from './chat-panel';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PageSkeleton } from './page-skeleton';
+import { DeleteDocumentButton } from './delete-document-button';
 
 const DocumentPage = ({
   params,
@@ -17,11 +18,14 @@ const DocumentPage = ({
   });
 
   return (
-    <main>
+    <>
       {!document && <PageSkeleton />}
       {document && (
         <>
-          <h1 className="text-4xl font-bold pb-8">{document.title}</h1>
+          <div className="flex items-center justify-between">
+            <h1 className="text-4xl font-bold pb-8">{document.title}</h1>
+            <DeleteDocumentButton documentId={document._id} />
+          </div>
           <Tabs defaultValue="document">
             <TabsList>
               <TabsTrigger value="document">Document</TabsTrigger>
@@ -43,7 +47,7 @@ const DocumentPage = ({
           </Tabs>
         </>
       )}
-    </main>
+    </>
   );
 };
 

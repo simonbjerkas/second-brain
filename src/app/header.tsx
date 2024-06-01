@@ -20,12 +20,12 @@ export const Header = () => {
             />
             SecondBrain
           </Link>
-          <div>
+          <div className="flex gap-8">
             <Link
-              href="/"
+              href="/dashboard"
               className="hover:text-muted-foreground font-semibold"
             >
-              Documents
+              Dashboard
             </Link>
           </div>
         </section>
