@@ -63,7 +63,7 @@ export const createDocument = mutation({
 export const getDocuments = query({
   async handler(ctx) {
     const userId = (await ctx.auth.getUserIdentity())?.tokenIdentifier;
-    if (!userId) return [];
+    if (!userId) return undefined;
     return await ctx.db
       .query('documents')
       .withIndex('by_tokenIdentifier', (q) => q.eq('tokenIdentifier', userId))
