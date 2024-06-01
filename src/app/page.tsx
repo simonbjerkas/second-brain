@@ -26,7 +26,7 @@ const HomePage = () => {
       </div>
       {documents && documents.length === 0 && (
         <div className="flex flex-col justify-center items-center gap-8 py-12">
-          <Image src="./text_files.svg" alt="" width={300} height={300} />
+          <Image src="/text_files.svg" alt="" width={300} height={300} />
           <h2 className="text-2xl font-semibold">You have no documents.</h2>
           <UploadDocumentButton />
         </div>

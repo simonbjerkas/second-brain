@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Doc } from '@/convex/_generated/dataModel';
 import { Eye } from 'lucide-react';
 import Link from 'next/link';
@@ -19,7 +20,15 @@ export const DocumentCard = ({ document }: { document: Doc<'documents'> }) => {
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Card content here</p>
+        {document.description ? (
+          <p>{document.description}</p>
+        ) : (
+          <div className="space-y-2">
+            <Skeleton className="w-full h-6" />
+            <Skeleton className="w-full h-6" />
+            <Skeleton className="w-full h-6" />
+          </div>
+        )}
       </CardContent>
       <CardFooter>
         <Button variant="secondary" asChild className="flex items-center gap-2">

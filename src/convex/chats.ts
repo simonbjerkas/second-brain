@@ -1,6 +1,5 @@
-import { ConvexError, v } from 'convex/values';
+import { v } from 'convex/values';
 import { internalMutation, query } from './_generated/server';
-import { hasAccessToDocument } from './documents';
 
 export const createChatRecord = internalMutation({
   args: {
