@@ -32,7 +32,7 @@ const NotesLayout = ({ children }: { children: React.ReactNode }) => {
             {notes === undefined ? (
               <div className="flex flex-col gap-4">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Skeleton key={i} className="h-10 w-28" />
+                  <Skeleton key={i} className="h-8 w-28" />
                 ))}
               </div>
             ) : (

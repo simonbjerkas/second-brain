@@ -7,27 +7,36 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Doc } from '@/convex/_generated/dataModel';
+import { File, NotebookPen } from 'lucide-react';
 import Link from 'next/link';
+import { number } from 'zod';
 
 export const ResultCard = ({
   result,
 }: {
   result:
-    | { record: Doc<'notes'>; type: 'note' }
-    | { record: Doc<'documents'>; type: 'document' };
+    | { record: Doc<'notes'>; score: number; type: 'note' }
+    | { record: Doc<'documents'>; score: number; type: 'document' };
 }) => {
   if (result.type === 'note')
     return (
       <Link href={`/dashboard/notes/${result.record._id}`}>
         <Card>
           <CardHeader>
-            <CardDescription>{result.type}</CardDescription>
+            <CardDescription>
+              <p className="flex items-center gap-2">
+                <NotebookPen className="size-4" />
+                {result.type}
+              </p>
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="line-clamp-3">{result.record.text}</p>
           </CardContent>
           <CardFooter>
-            <CardDescription>Created At</CardDescription>
+            <CardDescription>
+              <p>Relevance of {parseFloat(result.score.toFixed(2)) * 100}%</p>
+            </CardDescription>
           </CardFooter>
         </Card>
       </Link>
@@ -37,13 +46,20 @@ export const ResultCard = ({
       <Card>
         <CardHeader>
           <CardTitle>{result.record.title}</CardTitle>
-          <CardDescription>{result.type}</CardDescription>
+          <CardDescription>
+            <p className="flex items-center gap-2">
+              <File className="size-4" />
+              {result.type}
+            </p>
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="line-clamp-3">{result.record.description}</p>
         </CardContent>
         <CardFooter>
-          <CardDescription>Created At</CardDescription>
+          <CardDescription>
+            <p>Relevance of {parseFloat(result.score.toFixed(2)) * 100}%</p>
+          </CardDescription>
         </CardFooter>
       </Card>
     </Link>
