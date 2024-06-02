@@ -6,9 +6,13 @@ import { DocumentCard } from './document-card';
 import { UploadDocumentButton } from './upload-document-button';
 import { DocumentCardSkeleton } from './document-card-skeleton';
 import Image from 'next/image';
+import { useOrganization } from '@clerk/nextjs';
 
 const DocumentsPage = () => {
-  const documents = useQuery(api.documents.getDocuments);
+  const { organization } = useOrganization();
+  const documents = useQuery(api.documents.getDocuments, {
+    orgId: organization?.id,
+  });
   return (
     <>
       <div className="flex justify-between items-center pb-12">

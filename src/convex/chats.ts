@@ -1,5 +1,6 @@
 import { v } from 'convex/values';
 import { internalMutation, query } from './_generated/server';
+import { hasOrgAccess } from './memberships';
 
 export const createChatRecord = internalMutation({
   args: {
@@ -21,10 +22,17 @@ export const createChatRecord = internalMutation({
 export const getChatForDocument = query({
   args: {
     documentId: v.id('documents'),
+    orgId: v.optional(v.string()),
   },
   async handler(ctx, args) {
     const userId = (await ctx.auth.getUserIdentity())?.tokenIdentifier;
     if (!userId) return [];
+
+    let isMember = true;
+    if (args.orgId) {
+      isMember = await hasOrgAccess(ctx, args.orgId);
+    }
+    if (!isMember) return [];
 
     return await ctx.db
       .query('chats')

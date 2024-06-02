@@ -11,6 +11,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
+import { useOrganization } from '@clerk/nextjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAction } from 'convex/react';
 import { useForm } from 'react-hook-form';
@@ -32,9 +33,14 @@ export const QuestionForm = ({
       question: '',
     },
   });
+  const { organization } = useOrganization();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await askQuestion({ question: values.question, documentId });
+    await askQuestion({
+      question: values.question,
+      documentId,
+      orgId: organization?.id,
+    });
     form.reset();
   }
   return (

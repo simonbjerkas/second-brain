@@ -16,6 +16,7 @@ import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { LoadingButton } from '@/components/loading-button';
 import { Id } from '@/convex/_generated/dataModel';
+import { useOrganization } from '@clerk/nextjs';
 
 const formSchema = z.object({
   title: z.string().min(1).max(250),
@@ -25,6 +26,7 @@ const formSchema = z.object({
 export const UploadDocumentForm = ({ onUpload }: { onUpload: () => void }) => {
   const createDocument = useMutation(api.documents.createDocument);
   const generateUploadUrl = useMutation(api.documents.generateUploadUrl);
+  const { organization } = useOrganization();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,6 +49,7 @@ export const UploadDocumentForm = ({ onUpload }: { onUpload: () => void }) => {
     await createDocument({
       title: values.title,
       storageId: storageId as Id<'_storage'>,
+      orgId: organization?.id,
     });
 
     onUpload();

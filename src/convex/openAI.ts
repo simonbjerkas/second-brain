@@ -56,6 +56,7 @@ export const askQuestion = action({
   args: {
     question: v.string(),
     documentId: v.id('documents'),
+    orgId: v.optional(v.string()),
   },
   async handler(ctx, args) {
     const accessObj = await ctx.runQuery(

@@ -1,24 +1,38 @@
-import { ConvexError, v } from 'convex/values';
+import { v } from 'convex/values';
 import { action } from './_generated/server';
 import { embed } from './openAI';
-import { api } from './_generated/api';
+import { api, internal } from './_generated/api';
 import { Doc } from './_generated/dataModel';
 
 export const searchAction = action({
   args: {
     search: v.string(),
+    orgId: v.optional(v.string()),
   },
   async handler(ctx, args) {
     const userId = (await ctx.auth.getUserIdentity())?.tokenIdentifier;
     if (!userId) return null;
+    if (args.orgId) {
+      const isMember = await ctx.runQuery(
+        internal.memberships.hasOrgAccessQuery,
+        { orgId: args.orgId }
+      );
+      if (!isMember) return null;
+    }
 
     const embedding = await embed(args.search);
+
+    // const filter = args.orgId
+    //   ? (q: any) => q.eq('orgId', args.orgId)
+    //   : (q: any) => q.eq('tokenIdentifier', userId);
 
     const notesResults = await ctx.vectorSearch('notes', 'by_embedding', {
       vector: embedding,
       limit: 5,
-      filter: (q) => q.eq('tokenIdentifier', userId),
+      filter: (q) => q.eq('orgId', args.orgId),
     });
+
+    console.log('notesResults', notesResults);
 
     const documentsResults = await ctx.vectorSearch(
       'documents',
@@ -26,7 +40,7 @@ export const searchAction = action({
       {
         vector: embedding,
         limit: 5,
-        filter: (q) => q.eq('tokenIdentifier', userId),
+        filter: (q) => q.eq('orgId', args.orgId),
       }
     );
 
@@ -40,7 +54,7 @@ export const searchAction = action({
         const note = await ctx.runQuery(api.notes.getNote, {
           noteId: result._id,
         });
-        if (!note) return null;
+        if (!note) return;
         records.push({ record: note, score: result._score, type: 'note' });
       })
     );

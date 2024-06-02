@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { SearchForm } from './search-form';
-import { Doc } from '@/convex/_generated/dataModel';
 import { ResultCard } from './result-card';
 import { api } from '@/convex/_generated/api';
 

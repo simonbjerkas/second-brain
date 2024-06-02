@@ -32,7 +32,7 @@ export const DocumentCard = ({ document }: { document: Doc<'documents'> }) => {
       </CardContent>
       <CardFooter>
         <Button variant="secondary" asChild className="flex items-center gap-2">
-          <Link href={`/documents/${document._id}`}>
+          <Link href={`/dashboard/documents/${document._id}`}>
             <Eye className="size-4" />
             View
           </Link>

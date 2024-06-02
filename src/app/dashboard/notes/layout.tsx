@@ -6,17 +6,21 @@ import { api } from '@/convex/_generated/api';
 import Image from 'next/image';
 import { NoteNav } from './note-nav';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useOrganization } from '@clerk/nextjs';
 
 const NotesLayout = ({ children }: { children: React.ReactNode }) => {
-  const notes = useQuery(api.notes.getNotes);
+  const { organization } = useOrganization();
+  const notes = useQuery(api.notes.getNotes, {
+    orgId: organization?.id,
+  });
   return (
     <>
       <div className="flex justify-between items-center pb-12">
         <h1 className="text-4xl font-bold">My Notes</h1>
-        {notes && notes.length > 0 ? (
-          <CreateNoteButton />
+        {notes && notes.length === 0 ? (
+          notes === undefined && <Skeleton className="w-44 h-10" />
         ) : (
-          <Skeleton className="w-44 h-10" />
+          <CreateNoteButton />
         )}
       </div>
 

@@ -16,6 +16,7 @@ import { api } from '@/convex/_generated/api';
 import { LoadingButton } from '@/components/loading-button';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
+import { useOrganization } from '@clerk/nextjs';
 
 const formSchema = z.object({
   text: z.string().min(1).max(1000),
@@ -29,6 +30,7 @@ export const CreateNoteForm = ({
   const createNote = useMutation(api.notes.createNote);
 
   const { toast } = useToast();
+  const { organization } = useOrganization();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,7 +40,7 @@ export const CreateNoteForm = ({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await createNote(values);
+    await createNote({ ...values, orgId: organization?.id });
     onNoteCreated();
     toast({
       title: 'Note created',

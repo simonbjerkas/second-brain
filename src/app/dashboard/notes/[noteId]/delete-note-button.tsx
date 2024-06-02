@@ -25,6 +25,7 @@ export const DeleteNoteButton = ({ noteId }: { noteId: Id<'notes'> }) => {
   const [isOpen, setIsOpen] = useState(false);
   const deleteNote = useMutation(api.notes.deleteNote);
   const router = useRouter();
+
   return (
     <AlertDialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <AlertDialogTrigger asChild>

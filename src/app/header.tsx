@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { HeaderActions } from './header-actions';
 import Image from 'next/image';
+import { OrganizationSwitcher } from '@clerk/nextjs';
 
 export const Header = () => {
   return (
@@ -20,7 +21,8 @@ export const Header = () => {
             />
             SecondBrain
           </Link>
-          <div className="flex gap-8">
+          <div className="flex gap-8 items-center">
+            <OrganizationSwitcher />
             <Link
               href="/dashboard"
               className="hover:text-muted-foreground font-semibold"
