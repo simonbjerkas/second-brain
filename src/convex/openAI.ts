@@ -100,3 +100,11 @@ export const askQuestion = action({
     return response;
   },
 });
+
+export async function embed(text: string) {
+  const response = await openai.embeddings.create({
+    model: 'text-embedding-ada-002',
+    input: text,
+  });
+  return response.data[0].embedding;
+}

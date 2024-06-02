@@ -20,14 +20,10 @@ import { LoadingButton } from '@/components/loading-button';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export const DeleteDocumentButton = ({
-  documentId,
-}: {
-  documentId: Id<'documents'>;
-}) => {
+export const DeleteNoteButton = ({ noteId }: { noteId: Id<'notes'> }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const deleteDocument = useMutation(api.documents.deleteDocument);
+  const deleteNote = useMutation(api.notes.deleteNote);
   const router = useRouter();
   return (
     <AlertDialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
@@ -39,11 +35,10 @@ export const DeleteDocumentButton = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you sure you want to delete this document?
+            Are you sure you want to delete this note?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this
-            document, and all correspondig chat messages.
+            This action cannot be undone, and will permanently delete this note.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -52,8 +47,8 @@ export const DeleteDocumentButton = ({
             <LoadingButton
               onClick={() => {
                 setIsLoading(true);
-                deleteDocument({ documentId })
-                  .then(() => router.push('/dashboard/documents'))
+                deleteNote({ noteId })
+                  .then(() => router.push('/dashboard/notes'))
                   .finally(() => setIsLoading(false));
               }}
               isLoading={isLoading}

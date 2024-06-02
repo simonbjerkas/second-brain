@@ -1,6 +1,5 @@
 import { defineSchema, defineTable } from 'convex/server';
 import { v } from 'convex/values';
-import { title } from 'process';
 
 export default defineSchema({
   documents: defineTable({
@@ -18,5 +17,12 @@ export default defineSchema({
   notes: defineTable({
     text: v.string(),
     tokenIdentifier: v.string(),
-  }).index('by_tokenIdentifier', ['tokenIdentifier']),
+    embedding: v.optional(v.array(v.float64())),
+  })
+    .index('by_tokenIdentifier', ['tokenIdentifier'])
+    .vectorIndex('by_embedding', {
+      vectorField: 'embedding',
+      dimensions: 1536,
+      filterFields: ['tokenIdentifier'],
+    }),
 });

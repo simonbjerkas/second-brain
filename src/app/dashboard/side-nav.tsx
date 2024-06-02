@@ -8,7 +8,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
-import { Files, NotebookPen, Settings2 } from 'lucide-react';
+import { Files, NotebookPen, Search, Settings2 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -17,6 +17,17 @@ export const SideNav = () => {
   return (
     <NavigationMenu>
       <NavigationMenuList className="flex flex-col gap-4 items-start">
+        <NavigationMenuItem>
+          <Link href="/dashboard/search" legacyBehavior passHref>
+            <NavigationMenuLink
+              active={pathname.startsWith('/dashboard/search')}
+              className={cn(navigationMenuTriggerStyle(), 'flex gap-2')}
+            >
+              <Search className="size-4" />
+              Search
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/dashboard/documents" legacyBehavior passHref>
             <NavigationMenuLink
