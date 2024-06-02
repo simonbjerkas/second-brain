@@ -7,7 +7,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const generateDocumentDescription = internalAction({
+export const generateDocumentDescriptionAndEmbedding = internalAction({
   args: {
     storageId: v.id('_storage'),
     documentId: v.id('documents'),
@@ -33,16 +33,22 @@ export const generateDocumentDescription = internalAction({
       model: 'gpt-3.5-turbo',
     });
 
-    const response =
+    const description =
       chatCompletion.choices[0].message.content ||
       'Could not figure out description for this document.';
 
-    await ctx.runMutation(internal.documents.updateDocumentDescription, {
-      documentId: args.documentId,
-      description: response,
-    });
+    const embedding = await embed(description);
 
-    return response;
+    await ctx.runMutation(
+      internal.documents.updateDocumentDescriptionAndEmbedding,
+      {
+        documentId: args.documentId,
+        description,
+        embedding,
+      }
+    );
+
+    return description;
   },
 });
 

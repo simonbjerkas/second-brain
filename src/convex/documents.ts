@@ -2,6 +2,7 @@ import { ConvexError, v } from 'convex/values';
 import {
   MutationCtx,
   QueryCtx,
+  internalAction,
   internalMutation,
   internalQuery,
   mutation,
@@ -9,6 +10,7 @@ import {
 } from './_generated/server';
 import { internal } from './_generated/api';
 import { Id } from './_generated/dataModel';
+import { embed } from './openAI';
 
 export async function hasAccessToDocument(
   ctx: MutationCtx | QueryCtx,
@@ -55,7 +57,7 @@ export const createDocument = mutation({
 
     await ctx.scheduler.runAfter(
       0,
-      internal.openAI.generateDocumentDescription,
+      internal.openAI.generateDocumentDescriptionAndEmbedding,
       {
         storageId: args.storageId,
         documentId,
@@ -103,14 +105,16 @@ export const getDocument = query({
   },
 });
 
-export const updateDocumentDescription = internalMutation({
+export const updateDocumentDescriptionAndEmbedding = internalMutation({
   args: {
     documentId: v.id('documents'),
     description: v.string(),
+    embedding: v.array(v.float64()),
   },
   async handler(ctx, args) {
     await ctx.db.patch(args.documentId, {
       description: args.description,
+      embedding: args.embedding,
     });
   },
 });
