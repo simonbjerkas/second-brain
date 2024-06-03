@@ -21,7 +21,10 @@ export const SideNav = () => {
           <Link href="/dashboard/search" legacyBehavior passHref>
             <NavigationMenuLink
               active={pathname.startsWith('/dashboard/search')}
-              className={cn(navigationMenuTriggerStyle(), 'flex gap-2')}
+              className={cn(
+                navigationMenuTriggerStyle(),
+                'flex gap-2 justify-start w-40'
+              )}
             >
               <Search className="size-4" />
               Search
@@ -32,7 +35,10 @@ export const SideNav = () => {
           <Link href="/dashboard/documents" legacyBehavior passHref>
             <NavigationMenuLink
               active={pathname.startsWith('/dashboard/documents')}
-              className={cn(navigationMenuTriggerStyle(), 'flex gap-2')}
+              className={cn(
+                navigationMenuTriggerStyle(),
+                'flex gap-2 justify-start w-40'
+              )}
             >
               <Files className="size-4" />
               Documents
@@ -43,7 +49,10 @@ export const SideNav = () => {
           <Link href="/dashboard/notes" legacyBehavior passHref>
             <NavigationMenuLink
               active={pathname.startsWith('/dashboard/notes')}
-              className={cn(navigationMenuTriggerStyle(), 'flex gap-2')}
+              className={cn(
+                navigationMenuTriggerStyle(),
+                'flex gap-2 justify-start w-40'
+              )}
             >
               <NotebookPen className="size-4" />
               Notes
@@ -54,7 +63,10 @@ export const SideNav = () => {
           <Link href="/dashboard/settings" legacyBehavior passHref>
             <NavigationMenuLink
               active={pathname.startsWith('/dashboard/settings')}
-              className={cn(navigationMenuTriggerStyle(), 'flex gap-2')}
+              className={cn(
+                navigationMenuTriggerStyle(),
+                'flex gap-2 justify-start w-40'
+              )}
             >
               <Settings2 className="size-4" />
               Settings

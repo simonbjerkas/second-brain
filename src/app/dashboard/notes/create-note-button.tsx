@@ -18,7 +18,7 @@ export const CreateNoteButton = () => {
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <Button className="flex items-center gap-2">
+        <Button className="flex items-center gap-2 w-44">
           <SquarePen className="size-4" />
           Create a new note
         </Button>

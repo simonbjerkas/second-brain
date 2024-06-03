@@ -1,16 +1,19 @@
+'use client';
+
 import Link from 'next/link';
 import { HeaderActions } from './header-actions';
 import Image from 'next/image';
-import { OrganizationSwitcher } from '@clerk/nextjs';
+import { OrganizationSwitcher, useAuth } from '@clerk/nextjs';
 
 export const Header = () => {
+  const { isSignedIn } = useAuth();
   return (
-    <header className="bg-secondary py-4 mb-8">
+    <header className="relative z-10 bg-transparent py-4 mb-8">
       <div className="container mx-auto flex justify-between items-center">
-        <section className="flex items-center gap-24">
+        <section className="flex items-center gap-8 lg:gap-24 md:gap-16">
           <Link
             href="/"
-            className="flex gap-2 items-center text-xl font-extrabold font-mono"
+            className="flex gap-2 items-center text-sm md:text-xl font-extrabold font-mono"
           >
             <Image
               src="/logo.jpg"
@@ -21,19 +24,48 @@ export const Header = () => {
             />
             SecondBrain
           </Link>
-          <div className="flex gap-8 items-center">
-            <OrganizationSwitcher />
-            <Link
-              href="/dashboard"
-              className="hover:text-muted-foreground font-semibold"
-            >
-              Dashboard
-            </Link>
-          </div>
+          {isSignedIn && (
+            <div className="flex items-center gap-8">
+              <OrganizationSwitcher
+                appearance={{
+                  elements: {
+                    organizationPreviewMainIdentifier: {
+                      color: 'hsl(60 9.1% 97.8%)',
+                    },
+                    userPreviewMainIdentifier: {
+                      color: 'hsl(60 9.1% 97.8%)',
+                    },
+                  },
+                }}
+              />
+              <Link
+                href="/dashboard"
+                className="hidden md:block hover:text-muted-foreground font-semibold"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/dashboard/search"
+                className="hidden md:block hover:text-muted-foreground font-semibold"
+              >
+                Search
+              </Link>
+              <Link
+                href="/dashboard/documents"
+                className="hidden lg:block hover:text-muted-foreground font-semibold"
+              >
+                Documents
+              </Link>
+              <Link
+                href="/dashboard/notes"
+                className="hidden lg:block hover:text-muted-foreground font-semibold"
+              >
+                Notes
+              </Link>
+            </div>
+          )}
         </section>
-        <section className="flex items-center gap-8">
-          <HeaderActions />
-        </section>
+        <HeaderActions />
       </div>
     </header>
   );

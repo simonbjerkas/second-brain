@@ -15,8 +15,8 @@ const NotesLayout = ({ children }: { children: React.ReactNode }) => {
   });
   return (
     <>
-      <div className="flex justify-between items-center pb-12">
-        <h1 className="text-4xl font-bold">My Notes</h1>
+      <div className="hidden md:flex flex-col md:flex-row md:justify-between md:items-center gap-2 pb-12">
+        <h1 className="text-3xl md:text-4xl font-bold">My Notes</h1>
         {notes && notes.length === 0 ? (
           notes === undefined && <Skeleton className="w-44 h-10" />
         ) : (
@@ -31,8 +31,8 @@ const NotesLayout = ({ children }: { children: React.ReactNode }) => {
           <CreateNoteButton />
         </div>
       ) : (
-        <div className="flex gap-16">
-          <div className="w-44 border-r">
+        <div className="md:flex gap-16">
+          <div className="hidden md:block w-44 border-r">
             {notes === undefined ? (
               <div className="flex flex-col gap-4">
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -43,7 +43,7 @@ const NotesLayout = ({ children }: { children: React.ReactNode }) => {
               <NoteNav notes={notes || []} />
             )}
           </div>
-          <div className="w-full h-[500px]">{children}</div>
+          <div className="w-full md:h-[500px]">{children}</div>
         </div>
       )}
     </>

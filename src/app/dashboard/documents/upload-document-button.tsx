@@ -18,7 +18,7 @@ export const UploadDocumentButton = () => {
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <Button className="flex items-center gap-2">
+        <Button className="flex items-center gap-2 w-44">
           <Upload className="size-4" />
           Upload Document
         </Button>

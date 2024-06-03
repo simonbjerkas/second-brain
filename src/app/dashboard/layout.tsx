@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { SideNav } from './side-nav';
 
 export const metadata: Metadata = {
@@ -13,8 +12,8 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex gap-24">
-      <aside className="w-48 border-r">
+    <div className="md:flex gap-24 relative">
+      <aside className="hidden md:block w-48 md:border-r">
         <SideNav />
       </aside>
       <div className="flex-1">{children}</div>

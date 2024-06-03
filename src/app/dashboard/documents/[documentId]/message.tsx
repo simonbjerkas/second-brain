@@ -14,7 +14,7 @@ export const Message = ({
           className={cn(
             { 'bg-blue-500 dark:bg-emerald-800 text-right': isHuman },
             { 'bg-blue-200 dark:bg-emerald-600': !isHuman },
-            'rounded-xl py-2 px-4 whitespace-pre-line'
+            'rounded-xl py-2 px-4 whitespace-pre-line text-sm md:text-base'
           )}
         >
           {text}
