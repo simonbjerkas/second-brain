@@ -1,16 +1,19 @@
 'use client';
 
 import { ModeToggle } from '@/components/mode-toggle';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SignInButton, UserButton } from '@clerk/nextjs';
 import { Authenticated, Unauthenticated, AuthLoading } from 'convex/react';
-import { MenuIcon } from 'lucide-react';
+import { MenuIcon, Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
 export const HeaderActions = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const listener = (event: MouseEvent) => {
@@ -80,7 +83,15 @@ export const HeaderActions = () => {
                 Notes
               </Link>
             </Authenticated>
-            <ModeToggle />
+            {theme === 'dark' ? (
+              <Button onClick={() => setTheme('light')} size="icon">
+                <Sun />
+              </Button>
+            ) : (
+              <Button onClick={() => setTheme('dark')} size="icon">
+                <Moon />
+              </Button>
+            )}
             <AuthLoading>
               <Skeleton className="size-7 rounded-full bg-gray-200 dark:bg-gray-700" />
             </AuthLoading>
