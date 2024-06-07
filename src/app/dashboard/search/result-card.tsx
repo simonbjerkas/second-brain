@@ -24,10 +24,10 @@ export const ResultCard = ({
         <Card>
           <CardHeader>
             <CardDescription>
-              <p className="flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 <NotebookPen className="size-4" />
                 {result.type}
-              </p>
+              </span>
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -35,7 +35,7 @@ export const ResultCard = ({
           </CardContent>
           <CardFooter>
             <CardDescription>
-              <p>Relevance of {parseFloat(result.score.toFixed(2)) * 100}%</p>
+              Relevance of {parseFloat(result.score.toFixed(2)) * 100}%
             </CardDescription>
           </CardFooter>
         </Card>
@@ -47,10 +47,10 @@ export const ResultCard = ({
         <CardHeader>
           <CardTitle>{result.record.title}</CardTitle>
           <CardDescription>
-            <p className="flex items-center gap-2">
+            <span className="flex items-center gap-2">
               <File className="size-4" />
               {result.type}
-            </p>
+            </span>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -58,7 +58,7 @@ export const ResultCard = ({
         </CardContent>
         <CardFooter>
           <CardDescription>
-            <p>Relevance of {parseFloat(result.score.toFixed(2)) * 100}%</p>
+            Relevance of {parseFloat(result.score.toFixed(2)) * 100}%
           </CardDescription>
         </CardFooter>
       </Card>

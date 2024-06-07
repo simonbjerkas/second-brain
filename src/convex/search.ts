@@ -22,17 +22,11 @@ export const searchAction = action({
 
     const embedding = await embed(args.search);
 
-    // const filter = args.orgId
-    //   ? (q: any) => q.eq('orgId', args.orgId)
-    //   : (q: any) => q.eq('tokenIdentifier', userId);
-
     const notesResults = await ctx.vectorSearch('notes', 'by_embedding', {
       vector: embedding,
       limit: 5,
       filter: (q) => q.eq('orgId', args.orgId),
     });
-
-    console.log('notesResults', notesResults);
 
     const documentsResults = await ctx.vectorSearch(
       'documents',

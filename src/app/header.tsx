@@ -7,6 +7,7 @@ import { OrganizationSwitcher, useAuth } from '@clerk/nextjs';
 
 export const Header = () => {
   const { isSignedIn } = useAuth();
+
   return (
     <header className="relative z-10 bg-transparent py-4 mb-8">
       <div className="container mx-auto flex justify-between items-center">
@@ -26,18 +27,7 @@ export const Header = () => {
           </Link>
           {isSignedIn && (
             <div className="flex items-center gap-8">
-              <OrganizationSwitcher
-                appearance={{
-                  elements: {
-                    organizationPreviewMainIdentifier: {
-                      color: 'hsl(60 9.1% 97.8%)',
-                    },
-                    userPreviewMainIdentifier: {
-                      color: 'hsl(60 9.1% 97.8%)',
-                    },
-                  },
-                }}
-              />
+              <OrganizationSwitcher />
               <Link
                 href="/dashboard"
                 className="hidden md:block hover:text-muted-foreground font-semibold"
