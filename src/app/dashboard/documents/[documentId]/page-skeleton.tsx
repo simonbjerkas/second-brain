@@ -11,7 +11,7 @@ export const PageSkeleton = () => {
         <Skeleton className="w-14 h-8" />
       </div>
       <div>
-        <Skeleton className="w-full h-[450px] md:h-[500px]" />
+        <Skeleton className="w-full h-[65vh]" />
       </div>
     </>
   );

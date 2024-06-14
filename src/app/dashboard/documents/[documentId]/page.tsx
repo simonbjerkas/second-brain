@@ -77,7 +77,7 @@ const DocumentPage = () => {
               <TabsTrigger value="chat">Chat</TabsTrigger>
             </TabsList>
             <TabsContent value="document">
-              <div className="bg-secondary p-4 rounded flex-1 h-[450px] md:h-[500]">
+              <div className="bg-secondary p-4 rounded flex-1 h-[65vh]">
                 {document.documentUrl && (
                   <iframe
                     className="w-full h-full"

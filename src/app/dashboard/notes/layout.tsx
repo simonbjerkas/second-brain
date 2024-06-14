@@ -43,7 +43,7 @@ const NotesLayout = ({ children }: { children: React.ReactNode }) => {
               <NoteNav notes={notes || []} />
             )}
           </div>
-          <div className="w-full md:h-[500px]">{children}</div>
+          <div className="w-full md:h-[65vh]">{children}</div>
         </div>
       )}
     </>

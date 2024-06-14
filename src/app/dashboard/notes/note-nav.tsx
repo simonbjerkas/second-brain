@@ -22,7 +22,7 @@ export const NoteNav = ({ notes }: { notes: Doc<'notes'>[] }) => {
             <Link href={`/dashboard/notes/${note._id}`} legacyBehavior passHref>
               <NavigationMenuLink
                 active={pathname === `/dashboard/notes/${note._id}`}
-                className={navigationMenuTriggerStyle()}
+                className={`w-32 ${navigationMenuTriggerStyle()}`}
               >
                 {note.text.substring(0, 10) + '...'}
               </NavigationMenuLink>

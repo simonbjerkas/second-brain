@@ -61,7 +61,7 @@ const NotePage = () => {
       {note === undefined ? (
         <Skeleton className="size-full" />
       ) : (
-        <div className="relative bg-secondary w-full min-h-[400px] rounded p-4 overflow-y-auto">
+        <div className="relative bg-secondary w-full h-[65vh] rounded p-4 overflow-y-auto">
           <div className="absolute top-4 right-4">
             <DeleteNoteButton noteId={noteId} />
           </div>

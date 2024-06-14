@@ -27,7 +27,7 @@ const SearchPage = () => {
           localStorage.setItem('searchResults', JSON.stringify(searchResults));
         }}
       />
-      <ul className="flex flex-col gap-4 mt-6 overflow-y-auto max-h-[500px]">
+      <ul className="flex flex-col gap-4 mt-6 overflow-y-auto max-h-[65vh]">
         {results?.map((result) => (
           <li key={result.record._id}>
             <ResultCard result={result} />
